@@ -1,0 +1,7 @@
+2026-11-21 10:00:01 INFO Server started successfully
+2026-11-21 10:00:05 DEBUG Initializing database connection pool
+2026-11-21 10:00:12 WARNING High memory usage detected: 85%
+2026-11-21 10:00:15 ERROR Database connection failed: timeout
+2026-11-21 10:00:20 INFO Retrying connection to database
+2026-11-21 10:00:25 ERROR Connection failed again
+2026-11-21 10:00:30 INFO Service restarted

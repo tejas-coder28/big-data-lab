@@ -1,0 +1,20 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Checksum files
+.*.crc
+*.crc
+
+# Spark / Hadoop runtime logs and warehouse
+spark-warehouse/
+metastore_db/
+derby.log
+.hdfs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini

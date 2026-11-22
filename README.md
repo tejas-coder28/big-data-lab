@@ -50,13 +50,17 @@ USN=1MS24CI134
 bigdata-lab/
 ├── conf/                          # Hadoop and HDFS configuration templates
 ├── DataSet/                       # Lab datasets
-│   ├── Custome.txt.txt
-│   ├── Earthquake Data.csv
-│   ├── Female and Male Employees Data.txt.txt
-│   ├── Insurance Data.csv
-│   ├── Retail Transactions.txt
-│   ├── Sales Records _Input.csv
-│   └── Weather Report Data .txt.txt
+│   ├── customers.txt              # Customer records
+│   ├── earthquake_data.csv        # Earthquake magnitude & depth data
+│   ├── employees_data.txt         # Employee salary and department data
+│   ├── insurance_data.csv         # Real estate insurance policy data
+│   ├── odd_even.txt               # Number dataset
+│   ├── orders.txt                 # Order transaction records
+│   ├── retail_transactions.txt    # Retail transactions for broadcast/accumulator
+│   ├── sales_records.csv          # Global sales records
+│   ├── student_details.txt        # Student database details
+│   ├── weather_data.txt           # Weather report observations
+│   └── wordcount_input.txt        # Sample text for WordCount MapReduce
 ├── scripts/                       # Startup scripts, helpers, and bashrc configuration
 ├── shared/                        # Host-container shared directory (mounted to /home/rit/shared)
 │   └── 1MS24CI134/                # Student program directory
@@ -106,7 +110,7 @@ source Bash.sh
    ```bash
    hdfs dfs -mkdir /user
    hdfs dfs -mkdir /user/rit
-   hdfs dfs -put ~/DataSet/"WordCount Input.txt" /user/rit/input.txt
+   hdfs dfs -put ~/DataSet/wordcount_input.txt /user/rit/input.txt
    hdfs dfs -ls /user/rit
    hdfs dfs -cat /user/rit/input.txt
    ```

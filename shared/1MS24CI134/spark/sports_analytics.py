@@ -38,9 +38,7 @@ keywords = [
     "century"
 ]
 
-filtered_words = words.filter(
-    col("word").isin(keywords)
-)
+filtered_words = words.filter(col("word").isin(keywords))
 
 keyword_counts = filtered_words.groupBy("word").count()
 

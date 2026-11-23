@@ -8,69 +8,48 @@ data = [
     (103, "Amit", "Finance", 60000),
     (104, "Sneha", "IT", 55000)
 ]
+
 columns = ["ID", "Name", "Department", "Salary"]
 
 df = spark.createDataFrame(data, columns)
 df.createOrReplaceTempView("Employee")
 
-print("Original Employee Records")
+# Read
+print("--- Original Records ---")
 spark.sql("SELECT * FROM Employee").show()
 
-print("After Inserting Employee")
+# Insert
+print("--- After Insert (Kiran) ---")
 df1 = spark.sql("""
 SELECT * FROM Employee
 UNION ALL
 SELECT 105, 'Kiran', 'HR', 48000
 """)
 df1.show()
-df1.createOrReplaceTempView("Employee1")
+df1.createOrReplaceTempView("Employee")
 
-print("After Updating Salary")
+# Update
+print("--- After Update (Rahul Salary to 65000) ---")
 df2 = spark.sql("""
 SELECT ID, Name, Department,
-CASE WHEN ID = 101 THEN 65000
-ELSE Salary END AS Salary
-FROM Employee1
+CASE WHEN ID = 101 THEN 65000 ELSE Salary END AS Salary
+FROM Employee
 """)
 df2.show()
-df2.createOrReplaceTempView("Employee2")
+df2.createOrReplaceTempView("Employee")
 
-print("After Deleting Employee")
-df3 = spark.sql("""
-SELECT * FROM Employee2
-WHERE ID != 103
-""")
+# Delete
+print("--- After Delete (Amit ID 103) ---")
+df3 = spark.sql("SELECT * FROM Employee WHERE ID != 103")
 df3.show()
-df3.createOrReplaceTempView("Employee3")
+df3.createOrReplaceTempView("Employee")
 
-print("Total Number of Employees")
-spark.sql("""
-SELECT COUNT(*) AS Total_Employees
-FROM Employee3
-""").show()
-
-print("Total Salary of Employees")
-spark.sql("""
-SELECT SUM(Salary) AS Total_Salary
-FROM Employee3
-""").show()
-
-print("Average Salary of Employees")
-spark.sql("""
-SELECT AVG(Salary) AS Average_Salary
-FROM Employee3
-""").show()
-
-print("Maximum Salary")
-spark.sql("""
-SELECT MAX(Salary) AS Maximum_Salary
-FROM Employee3
-""").show()
-
-print("Minimum Salary")
-spark.sql("""
-SELECT MIN(Salary) AS Minimum_Salary
-FROM Employee3
-""").show()
+# Aggregate
+print("--- Aggregations ---")
+spark.sql("SELECT COUNT(*) AS Total_Employees FROM Employee").show()
+spark.sql("SELECT SUM(Salary) AS Total_Salary FROM Employee").show()
+spark.sql("SELECT AVG(Salary) AS Average_Salary FROM Employee").show()
+spark.sql("SELECT MAX(Salary) AS Max_Salary FROM Employee").show()
+spark.sql("SELECT MIN(Salary) AS Min_Salary FROM Employee").show()
 
 spark.stop()

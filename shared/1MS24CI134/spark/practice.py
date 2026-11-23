@@ -1,34 +1,16 @@
-"""
-CI51 Big Data Lab - Practice Scratchpad
-Run with: spark-submit practice.py
-"""
 
 from pyspark.sql import SparkSession
-from pyspark import SparkContext
+from pyspark.sql.functions import (col,explode,split,lower)
 
-# Initialize Spark Session & Context
-spark = SparkSession.builder \
-    .appName("PracticeSession") \
-    .master("local[*]") \
-    .getOrCreate()
+spark=SparkSession.builder.appName("LiveStreaming").getOrCreate()
 
-sc = spark.sparkContext
-sc.setLogLevel("ERROR")
+commentary=spark.readStream.format("socket").option("host","localhost").option("port","9999").load()
 
-print("========================================")
-print(" Spark is ready! Write your code below. ")
-print("========================================")
+keyword=["kohli","rohit","run","wicket"]
 
-# --- Write your practice code below ---
+words=commentary.select(explode(split(lower(col("value")),r"\W+")).alias("word"))
+filtered_words=words.filter(col("word").isin(keyword))
+keyword_count=filtered_words.groupBy("word").count()
 
-# Example 1: RDD
-# rdd = sc.parallelize([1, 2, 3, 4, 5])
-# print("Sum:", rdd.reduce(lambda x, y: x + y))
-
-# Example 2: DataFrame
-# df = spark.createDataFrame([(1, "Alice"), (2, "Bob")], ["ID", "Name"])
-# df.show()
-
-
-# Stop Spark when done
-spark.stop()
+query=keyword_count.writeStream.outputMode("complete").format("console").option("truncate",False).trigger(processingTime="5 seconds").start()
+query.awaitTermination()

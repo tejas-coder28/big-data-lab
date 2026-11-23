@@ -77,6 +77,7 @@ bigdata-lab/
 │       │   ├── fraud_train.py     # Program 12 (Part 1): Train Logistic Regression model
 │       │   ├── fraud_stream.py    # Program 12 (Part 2): Real-time streaming fraud detection
 │       │   ├── fraud_model/       # Saved trained model
+│       │   ├── movie_recommendation.py # Program 13: Collaborative Filtering with ALS
 │       │   └── practice.py        # Practice template scratchpad
 │       └── hadoop/                # Hadoop MapReduce Programs (Programs 1–3)
 │           ├── wordcount/         # Program 2: WordCount MapReduce
@@ -256,6 +257,16 @@ spark-submit customer_analytics.py
    spark-submit fraud_stream.py
    ```
 4. Paste transaction streams into Terminal 1 (`TX101,1200.0,0`, `TX102,65000.0,1`). Terminal 2 outputs real-time predictions (`0.0` = Normal, `1.0` = Fraud).
+
+---
+
+### Program 13: Movie Recommendation System (MLlib ALS)
+```bash
+cd ~/1MS24CI134/spark
+source Bash.sh
+spark-submit movie_recommendation.py
+```
+*Builds a collaborative filtering recommendation model using Alternating Least Squares (ALS), evaluates predictions with Root Mean Squared Error (RMSE), and outputs top 3 movie recommendations for every user.*
 
 ---
 

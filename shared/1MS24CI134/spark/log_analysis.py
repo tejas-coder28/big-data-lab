@@ -11,4 +11,5 @@ levels = logs.select(regexp_extract("value", r"(INFO|ERROR|WARNING|DEBUG)", 1).a
 
 counts = levels.filter("level != ''").groupBy("level").count()
 
-counts.writeStream.outputMode("complete").format("console").start().awaitTermination()
+query = counts.writeStream.outputMode("complete").format("console").start()
+query.awaitTermination()
